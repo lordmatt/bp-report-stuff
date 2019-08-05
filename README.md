@@ -8,3 +8,4 @@ How you can contribute:
 * If you run an install, we will (eventually) need testers.
 
 Fork the heck out of this project and I will do my best to check for contributions as often as possible.
+
