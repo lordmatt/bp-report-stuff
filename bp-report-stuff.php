@@ -10,5 +10,7 @@ License: GPLv3 or later
 Text Domain: bp_report_stuff
 */
 
+define( 'BP_REPORT_STUFF_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
 // includes go here
+require_once BP_REPORT_STUFF_PLUGIN_DIR.'core/setup.php';
