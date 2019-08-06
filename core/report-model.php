@@ -1,4 +1,5 @@
 <?php
+namespace bp_report_stuff;
 
 /**
  * Class report-model handles data, permission checks, and other I/O for reports

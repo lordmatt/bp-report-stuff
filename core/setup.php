@@ -23,13 +23,10 @@ register_uninstall_hook(__FILE__, 'bp_report_stuff_uninstall');
 
 
 // we will use some add_role and add_cap here
-
+// suggest: 
+// roles - triage, moderation, and...? 
+// caps - cooment-on-own, comment-on-other, action-on-own, action-on-other, close-own, close-other
 
 // set up the controller endpoints here
 
-add_action( 'rest_api_init', function () {
-  register_rest_route( 'bp_report_stuff/v1', '/report', array(
-    'methods' => 'PST',
-    'callback' => 'my_awesome_func',
-  ) );
-} );
+$bp_report_stuff_controller = new bp_report_stuff\report_controller();
