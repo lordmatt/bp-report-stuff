@@ -46,7 +46,7 @@
 		?>
 		<label for="comment">Comments</label>
 		<input type="text" name="comment" id="comment" value="" class="text ui-widget-content ui-corner-all">
-
+		<?php do_action('bp_report_stuff_form_footer'); ?>
 		<!-- Allow form submission with keyboard without duplicating the dialog button -->
 		<input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
     </fieldset>
