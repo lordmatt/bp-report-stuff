@@ -23,6 +23,8 @@ namespace bp_report_stuff;
  */
 class report_controller {
 
+	private $model = NULL;
+	
 	public function establish_endpoints(){
 		add_action( 'rest_api_init', function () {
 			register_rest_route( 'bp_report_stuff/v1', '/report', array(
@@ -32,7 +34,36 @@ class report_controller {
 		} );
 	}
 	
+	/**
+	 * 
+	 * @return report_model
+	 */
+	protected function model(){
+		if($this->model == NULL){
+			$this->model = new report_model();
+		}
+		return $this->model;
+	}
+	
 	public function do_reports(){
+		if(!$this->model()->user_can_('report')){
+			$error = array();
+			$error['error']=_x('You do not have permission to report in this context','user cannot report','bp_report_stuff');
+			return $error;
+		}
+		// process report
+		
+		//@TODO:check NOnce
+		
+		$reason = __('Not set','bp_report_stuff');
+		if(isset($_POST['reason'])){
+			$reason = $_POST['reason'];
+		}
+		
+		$item_reported = 0; //@todo get item reported
+		
+		$user_reporting = -1; //@todo get current user
+		
 		
 	}
 	
