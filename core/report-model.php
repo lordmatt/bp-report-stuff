@@ -25,11 +25,21 @@ class report_model {
 	
 	# method params TBD
 	public function new_report($data){
+		$id = 0; // this indicates a fail state
 		
+		// insert row
+		// get row id
+		
+		return $id;
 	}
 	
 	public function add_comment_to_report($report_id,$comment,$user,$action){
+		$id = 0; // this indicates a fail state
 		
+		// insert row
+		// get row id
+		
+		return $id;
 	}
 	
 	public function get_available_actions($report_id){
@@ -38,7 +48,7 @@ class report_model {
 	}
 	
 	public function get_comments($report_id){
-		
+		// SELECT * FROM comment_table WHERE report_id=$report_id;
 	}
 	
 	public function get_raw_report($report_id){
@@ -46,14 +56,23 @@ class report_model {
 	}
 	
 	public function get_report_and_comments($report_id){
-		
+		$report = $this->get_raw_report($report_id);
+		$comments = $this->get_comments($report_id);
+		if(!is_array($report)){
+			return FALSE;
+		}
+		if(!is_array($comments)){
+			$comments=array();
+		}
+		$report = new report($report,$comments);
+		return $report;
 	}
 	
 	public function get_reports_by_user($user){
 		if(!$this->user_can_view_users_reports($this->get_current_user_id(),$user)){
 			return FALSE;
 		}
-		// return list of user's reports devided into open and closed
+		// return list of user's reports (pos devided into open and closed)
 	}
 	
 	// helpers
