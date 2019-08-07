@@ -89,4 +89,8 @@ class report_model {
 		//
 	}	
 	
+	public function user_can_report($user){
+		
+	}
+	
 }
