@@ -1,7 +1,7 @@
 ---
-name: Planning topic template
+name: Planning topic
 about: For proposing planning choices early into the project/version lifecycle.
-title: "[PANNING]"
+title: "[PLANNING]"
 labels: question
 assignees: lordmatt
 
