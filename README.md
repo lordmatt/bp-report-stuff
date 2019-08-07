@@ -9,3 +9,4 @@ How you can contribute:
 
 Fork the heck out of this project and I will do my best to check for contributions as often as possible.
 
+Check the GitHub wiki because there is bound to be somewhere or something you _can_ contribute to.
