@@ -39,7 +39,7 @@
 			
 			foreach ( $bp_report_stuff_reasons as $bp_report_stuff_key => $bp_report_stuff_reason ) {
 				?>
-		<input type="radio" id="id_<?php echo $bp_report_stuff_key; ?>" name="report" value="<?php echo $bp_report_stuff_key; ?>" class="text ui-widget-content ui-corner-all">
+		<input type="radio" id="id_<?php echo $bp_report_stuff_key; ?>" name="reason" value="<?php echo $bp_report_stuff_key; ?>" class="text ui-widget-content ui-corner-all">
 		<label for="id_<?php echo $bp_report_stuff_key; ?>"><?php echo $bp_report_stuff_reason; ?></label>
 				<?php
 			}
