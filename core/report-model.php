@@ -33,9 +33,11 @@ class report_model {
 		return $id;
 	}
 	
-	public function add_comment_to_report($report_id,$comment,$user,$action){
+	public function add_comment_to_report($report_id,$comment,$user=NULL,$action=NULL){
 		$id = 0; // this indicates a fail state
-		
+		if($user===NULL){
+			$user = $this->get_current_user_id();
+		}
 		// insert row
 		// get row id
 		
@@ -54,7 +56,12 @@ class report_model {
 	public function get_raw_report($report_id){
 		
 	}
-	
+	/**
+	 * Get a report object for the given ID with all comments.
+	 * 
+	 * @param type $report_id
+	 * @return boolean|\bp_report_stuff\report
+	 */
 	public function get_report_and_comments($report_id){
 		$report = $this->get_raw_report($report_id);
 		$comments = $this->get_comments($report_id);
@@ -64,7 +71,7 @@ class report_model {
 		if(!is_array($comments)){
 			$comments=array();
 		}
-		$report = new report($report,$comments);
+		$report = new report($report,$comments,$this);
 		return $report;
 	}
 	
@@ -77,13 +84,20 @@ class report_model {
 	
 	// helpers
 	protected function get_current_user_id(){
-		
+		return \get_current_user_id(); // Directly map to the WP function
 	}
 	
 	
 	
 	// permissions
-	
+	/**
+	 * Enquire if the named action is available to a given user.
+	 * 
+	 * @param string $action
+	 * @param null|int $user
+	 * @param null|int $report_id
+	 * @return boolean
+	 */
 	public function user_can_($action, $user=NULL, $report_id=NULL){
 		if($user===NULL){
 			$user = $this->get_current_user_id();
@@ -91,11 +105,12 @@ class report_model {
 		$method_name = "user_can_{$action}";
 		if(  method_exists( $this, $method_name )){
 			if($report_id!=NULL){
-				call_user_method($method_name, $this, $user, $report_id);
+				return call_user_method($method_name, $this, $user, $report_id);
 			}else{
-				call_user_method($method_name, $this, $user);
+				return call_user_method($method_name, $this, $user);
 			}
 		}
+		return FALSE;
 	}
 	
 	public function user_can_view_report($user, $report_id){

@@ -25,10 +25,49 @@ class report {
 
 	public $report;
 	public $comments;
+	protected $model;
+	protected $id;
 	
-	public function __construct($report,$comments=array()) {
+	/**
+	 * 
+	 * @param array $report
+	 * @param array $comments
+	 * @param null|\bp_report_stuff\report_model $model
+	 */
+	public function __construct($report,$comments=array(),$model=NULL) {
 		$this->report   = $report;
 		$this->comments = $comments;
+		$this->model    = $model;
+		if(isset($report['id'])){
+			$this->id = $report['id'];
+		}else{
+			// error 
+			$this->id = 0;
+		}
+	}
+	
+	/**
+	 * Internal path to model this enable us to call for actions on a report 
+	 * object which can be passed through to the model correctly without the
+	 * report object having any data layer code itself.
+	 * 
+	 * @return \bp_report_stuff\report_model
+	 */
+	protected function model(){
+		if(!isset($this->model) || !($this->model instanceof report_model) ){
+			$this->model = new report_model();
+		}
+		return $this->model;
+	}
+	
+	/**
+	 * Current user adds comment to this report.
+	 * 
+	 * @param string $comment
+	 * @param type $action
+	 */
+	public function add_comment($comment,$action=NULL){
+		$this->model()->add_comment_to_report($this->id,$comment,NULL,$action);
 	}
 	
 }
