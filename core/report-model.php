@@ -97,6 +97,7 @@ class report_model {
 		$warning['date']	= date('Y-m-d H:i:s');
 		$warning['mod_id']	= $this->get_current_user_id();
 		$warning['message']	= $message;
+		$warning = apply_filters( 'bp_report_stuff_user_meta_warning', $warning );
 		$meta[]				= $warning;
 		update_user_meta( $user_id, BP_REPORT_STUFF_META_WARNINGS_KEY, $meta);
 	}
