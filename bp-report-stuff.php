@@ -34,3 +34,6 @@ require_once BP_REPORT_STUFF_PLUGIN_DIR.'core/report-controller.php';
 require_once BP_REPORT_STUFF_PLUGIN_DIR.'core/report-object.php';
 
 require_once BP_REPORT_STUFF_PLUGIN_DIR.'core/setup.php';
+
+// changing this may cause undesirable behaviour proceed at your own risk
+define('BP_REPORT_STUFF_META_WARNINGS_KEY','_report_stuff_warnings');
