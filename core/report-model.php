@@ -5,7 +5,7 @@ namespace bp_report_stuff;
  * Class report-model handles data, permission checks, and other I/O for reports
  *
  * @author lordmatt
- * 
+ * @todo Once table design is finalised, gets, sets, updates, and drops
  * 
  * This file is part of BP Report Stuff.
  * 
@@ -75,11 +75,23 @@ class report_model {
 		return $report;
 	}
 	
-	public function get_reports_by_user($user){
-		if(!$this->user_can_view_users_reports($this->get_current_user_id(),$user)){
+	/**
+	 * Get an array of reports made by a given user
+	 * 
+	 * @todo the actual get from db
+	 * 
+	 * @param int $user_id
+	 * @return boolean|array
+	 */
+	public function get_reports_by_user($user_id){
+		if(!$this->user_can_view_users_reports($this->get_current_user_id(),$user_id)){
 			return FALSE;
 		}
 		// return list of user's reports (pos devided into open and closed)
+		$reports = array();
+		
+		
+		return $reports;
 	}
 	
 	/**
