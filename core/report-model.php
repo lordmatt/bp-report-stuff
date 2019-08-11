@@ -82,6 +82,25 @@ class report_model {
 		// return list of user's reports (pos devided into open and closed)
 	}
 	
+	/**
+	 * Records moderator warnings for the user in the user meta
+	 * 
+	 * @param int $user_id
+	 * @param string $message
+	 */
+	public function record_user_warning($user_id,$message){
+		$meta = get_user_meta($user_id, BP_REPORT_STUFF_META_WARNINGS_KEY, TRUE);
+		if( !is_array( $meta )){
+			$meta = array();
+		}
+		$warning = array();
+		$warning['date']	= date('Y-m-d H:i:s');
+		$warning['mod_id']	= $this->get_current_user_id();
+		$warning['message']	= $message;
+		$meta[]				= $warning;
+		update_user_meta( $user_id, BP_REPORT_STUFF_META_WARNINGS_KEY, $meta);
+	}
+	
 	// helpers
 	protected function get_current_user_id(){
 		return \get_current_user_id(); // Directly map to the WP function
@@ -109,8 +128,21 @@ class report_model {
 			}else{
 				return call_user_method($method_name, $this, $user);
 			}
+		}else{
+			// There's no native handler for this maybe it is a WP cap?
+			$boo = FALSE;
+			try {
+				$boo = @current_user_can( $action );
+				if( is_bool( $boo )){
+					return $boo;
+				}
+				return FALSE;
+			} catch (Exception $e) {
+				// wow that went badly
+				return FALSE;
+			}
 		}
-		return FALSE;
+		return FALSE; // should never be reached...
 	}
 	
 	public function user_can_view_report($user, $report_id){
