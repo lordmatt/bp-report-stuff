@@ -25,6 +25,9 @@ class report_controller extends core {
 
 	private $model = NULL;
 	
+	/**
+	 * This is called early on in the page load to set up an endpoint.
+	 */
 	public function establish_endpoints(){
 		add_action( 'rest_api_init', function () {
 			register_rest_route( 'bp_report_stuff/v1', '/report', array(
@@ -34,8 +37,13 @@ class report_controller extends core {
 		} );
 	}
 	
-	}
 	
+	/**
+	 * This is the method that handles the endpoint /report where the UI form
+	 * submits to. It currently is in want of a lot more work.
+	 * 
+	 * @return object|array|string
+	 */
 	public function do_reports(){
 		if(!$this->model()->user_can_('report')){
 			$error = array();
@@ -53,7 +61,9 @@ class report_controller extends core {
 		
 		$item_reported = 0; //@todo get item reported
 		
-		$user_reporting = -1; //@todo get current user
+		$uri_to_item = ''; //@todo get uri reported
+		
+		$user_reporting = \get_current_user_id();
 		
 		
 	}
