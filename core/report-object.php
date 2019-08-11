@@ -21,11 +21,10 @@ namespace bp_report_stuff;
  * You should have received a copy of the GNU General Public License along with 
  * datastore. If not, see http://www.gnu.org/licenses/.
  */
-class report {
+class report extends core {
 
 	public $report;
 	public $comments;
-	protected $model;
 	protected $id;
 	
 	/**
