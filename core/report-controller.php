@@ -21,7 +21,7 @@ namespace bp_report_stuff;
  * You should have received a copy of the GNU General Public License along with 
  * datastore. If not, see http://www.gnu.org/licenses/.
  */
-class report_controller {
+class report_controller extends core {
 
 	private $model = NULL;
 	
@@ -34,15 +34,6 @@ class report_controller {
 		} );
 	}
 	
-	/**
-	 * 
-	 * @return report_model
-	 */
-	protected function model(){
-		if($this->model == NULL){
-			$this->model = new report_model();
-		}
-		return $this->model;
 	}
 	
 	public function do_reports(){
