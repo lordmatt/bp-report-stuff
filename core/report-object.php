@@ -63,7 +63,7 @@ class report extends core {
 	 * Current user adds comment to this report.
 	 * 
 	 * @param string $comment
-	 * @param type $action
+	 * @param string $action
 	 */
 	public function add_comment($comment,$action=NULL){
 		$this->model()->add_comment_to_report($this->id,$comment,NULL,$action);
