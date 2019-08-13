@@ -37,7 +37,40 @@ class report_controller extends core {
 		} );
 	}
 	
+	/**
+	 * 
+	 * @param string $post the POST var to get
+	 * @param array|string|boolean $default
+	 * @return array|string
+	 */
+	protected function get_post($post,$default){
+		if(isset($_POST[$post])){
+			return $_POST[$post];
+		}
+		return $default;
+	}
 	
+	protected function verify_nonce( $nonce, $action ){
+		return wp_verify_nonce( $nonce, $action );
+	}
+
+	/**
+	 * Error codes are constructed using the following pattern: [XY]: where X is  
+	 * the endpoint method (one "number" per endpoint), and where Y is the error 
+	 * (in the order added).   Error codes should be unique. An end point has 10
+	 * possible error codes 0-9.  This function should never be called except if
+	 * an unhandled exception is encountered.
+	 * 
+	 * #1 [do_reports]
+	 * 
+	 * @return array
+	 */
+	protected function return_unknown_error(){
+			$error = array();
+			$error['error']['code']=-1;
+			$error['error']['message']=_x('Unknown error. Please file a support ticket and/or try again','unknown failure','bp_report_stuff');
+			return $error;
+	}
 	/**
 	 * This is the method that handles the endpoint /report where the UI form
 	 * submits to. It currently is in want of a lot more work.
@@ -45,23 +78,34 @@ class report_controller extends core {
 	 * @return object|array|string
 	 */
 	public function do_reports(){
-		if(!$this->model()->user_can_('report')){
+		
+		// XSS test
+		if(!$this->verify_nonce($this->get_post('nonce',-1),'report')){
 			$error = array();
-			$error['error']=_x('You do not have permission to report in this context','user cannot report','bp_report_stuff');
+			$error['error']['code']=10;
+			$error['error']['message']=_x('Possible XSS attack, expired form, or error. Please reload page and try again.','NOnce failed','bp_report_stuff');
 			return $error;
 		}
-		// process report
 		
-		//@TODO:check NOnce
+		// internal check
+		if(!$this->model()->user_can_('report')){
+			$error = array();
+			$error['error']['code']=11;
+			$error['error']['message']=_x('You do not have permission to report in this context','user cannot report','bp_report_stuff');
+			return $error;
+		}
+		
+		// process report
 		
 		$reason = __('Not set','bp_report_stuff');
 		if(isset($_POST['reason'])){
 			$reason = $_POST['reason'];
 		}
 		
-		$item_reported = 0; //@todo get item reported
+		$item_id_reported = $this->get_post('object_id',0);
+		$item_type_reported = $this->get_post('object_type',NULL);
 		
-		$uri_to_item = ''; //@todo get uri reported
+		$uri_to_item = $this->get_post('uri',FALSE);
 		
 		$user_reporting = \get_current_user_id();
 		
