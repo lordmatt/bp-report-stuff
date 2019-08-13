@@ -5,9 +5,10 @@ A buddy press module to allow reporting of objectionable content, spammy users, 
 
 How you can contribute:
 
-* If you know BuddyPress/WordPress dev, core coding is always appriciated
-* If you know JQuery and front end UI, we need that too
+* If you know BuddyPress/WordPress dev, core coding is always appriciated.
+* If you know JQuery and front end UI, we need coders to help fine-tune the UI.
 * If you run an install, we will (eventually) need testers.
+* We also need wiki editors to help us keep our documentation straight.
 
 Fork the heck out of this project and I will do my best to check for contributions as often as possible.
 
